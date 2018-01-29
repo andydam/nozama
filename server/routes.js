@@ -4,6 +4,7 @@ const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 
 const passport = require('./passport');
+const products = require('../products');
 
 const redisClient = redis.createClient();
 redisClient.on('error', console.error);
@@ -40,5 +41,7 @@ router.get('/auth', (req, res) =>
 /*
 * Add additional routers below
 */
+
+router.use(products);
 
 module.exports = router;
