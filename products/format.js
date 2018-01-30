@@ -12,4 +12,4 @@ const error = error => ({
   statusCode: error.status,
 });
 
-module.exports = { product };
+module.exports = { product, error };
