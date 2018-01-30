@@ -23,7 +23,7 @@ const index = [
     },
   },
   {
-    name: '1 productName 1',
+    name: 'productName 1',
     description: 'productDescription',
     categories: ['productCategory'],
     brand: 'productBrand',
@@ -37,7 +37,7 @@ const index = [
     },
   },
   {
-    name: '2 productName 2',
+    name: 'productName 2',
     description: 'productDescription',
     categories: ['productCategory'],
     brand: 'productBrand',
@@ -51,7 +51,7 @@ const index = [
     },
   },
   {
-    name: '3 productName 3',
+    name: 'productName 3',
     description: 'productDescription',
     categories: ['productCategory'],
     brand: 'productBrand',
@@ -65,7 +65,7 @@ const index = [
     },
   },
   {
-    name: '4 productName 4',
+    name: 'productName 4',
     description: 'productDescription',
     categories: ['productCategory'],
     brand: 'productBrand',
@@ -79,7 +79,7 @@ const index = [
     },
   },
   {
-    name: '5 productName 5',
+    name: 'productName 5',
     description: 'productDescription',
     categories: ['productCategory'],
     brand: 'productBrand',
@@ -93,7 +93,7 @@ const index = [
     },
   },
   {
-    name: '6 productName 6',
+    name: 'productName 6',
     description: 'productDescription',
     categories: ['productCategory'],
     brand: 'productBrand',
@@ -107,7 +107,7 @@ const index = [
     },
   },
   {
-    name: '7 productName 7',
+    name: 'productName 7',
     description: 'productDescription',
     categories: ['productCategory'],
     brand: 'productBrand',
@@ -121,7 +121,7 @@ const index = [
     },
   },
   {
-    name: '8 productName 8',
+    name: 'productName 8',
     description: 'productDescription',
     categories: ['productCategory'],
     brand: 'productBrand',
@@ -135,7 +135,7 @@ const index = [
     },
   },
   {
-    name: '9 productName 9',
+    name: 'productName 9',
     description: 'productDescription',
     categories: ['productCategory'],
     brand: 'productBrand',
@@ -149,7 +149,7 @@ const index = [
     },
   },
   {
-    name: '10 productName 10',
+    name: 'productName 10',
     description: 'productDescription',
     categories: ['productCategory'],
     brand: 'productBrand',

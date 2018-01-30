@@ -17,8 +17,8 @@ describe('Products => Search', () => {
       const results = await search.byString('productName', 1);
       expect(results.results).to.have.lengthOf.at.least(1);
       expect(results.results[0]).to.be.an('object');
-      expect(results.results[0].id).to.equal('test123Test');
-      expect(results.results[0].name).to.equal('productName');
+      expect(results.results[0].id).to.equal('test123Test2');
+      expect(results.results[0].name).to.equal('productName 2');
       expect(results.results[0].description).to.equal('productDescription');
       expect(results.results[0].categories).to.be.an('array');
       expect(results.results[0].price).to.equal(1.99);
