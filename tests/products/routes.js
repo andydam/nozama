@@ -99,7 +99,7 @@ describe('Products => Routes', () => {
     it('should respond with other pages when requested', (done) => {
       chai
         .request(server)
-        .get('/products/search/productName')
+        .get('/products/search/productName/2')
         .end((err, res) => {
           expect(res.body.currentPage).to.equal(2);
           expect(res.body.firstItemIndex).to.be.at.least(11);
