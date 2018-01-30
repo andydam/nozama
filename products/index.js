@@ -23,4 +23,13 @@ router.get('/products/search/:query', async (req, res) => {
   }
 });
 
+router.get('/products/search/:query/:page', async (req, res) => {
+  try {
+    const results = await search.byString(req.params.query, Number(req.params.page));
+    res.status(200).json(results);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
