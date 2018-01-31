@@ -1,49 +1,11 @@
 const { expect } = require('chai');
 
-const { client } = require('../../products/database/elasticsearch');
 const details = require('../../products/details');
+const testData = require('./testData');
 
 describe('Products => Details', () => {
-  before(async () => {
-    try {
-      await client.indices.get({ index: 'nozama' });
-    } catch (err) {
-      if (err.status === 404) {
-        await client.indices.create({ index: 'nozama' });
-        await client.indices.refresh();
-      }
-    }
-    try {
-      await client.get({
-        index: 'nozama',
-        type: 'products',
-        id: 'test123Test',
-      });
-    } catch (err) {
-      if (err.status === 404) {
-        await client.index({
-          index: 'nozama',
-          id: 'test123Test',
-          type: 'products',
-          body: {
-            name: 'productName',
-            description: 'productDescription',
-            categories: ['productCategory'],
-            brand: 'productBrand',
-            price: 1.99,
-          },
-        });
-        await client.indices.refresh();
-      }
-    }
-  });
-  after(async () => {
-    await client.delete({
-      index: 'nozama',
-      type: 'products',
-      id: 'test123Test',
-    });
-  });
+  before(testData.beforeSetUp);
+  after(testData.afterSetDown);
   describe('details.getById', () => {
     it('should return product details given a valid product ID', async () => {
       const product = await details.getById('test123Test');
