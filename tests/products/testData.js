@@ -329,9 +329,16 @@ const beforeMySQL = () =>
 const afterMySQL = () =>
   mysql.queryAsync('DELETE FROM product_reviews WHERE product_id = "testProduct1" OR product_id = "testProduct2"');
 
+const beforeLogin = () =>
+  mysql.queryAsync('INSERT INTO users (id, name) VALUES (999999, "testUser123")');
+
+const afterLogin = () => mysql.queryAsync('DELETE FROM users WHERE id = 999999');
+
 module.exports = {
   beforeSetUp,
   afterSetDown,
   beforeMySQL,
   afterMySQL,
+  beforeLogin,
+  afterLogin,
 };
