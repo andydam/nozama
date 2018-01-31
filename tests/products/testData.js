@@ -1,4 +1,5 @@
 const { client } = require('../../products/database/elasticsearch');
+const mysql = require('../../database');
 
 const index = [
   {
@@ -237,6 +238,54 @@ const remove = [
   },
 ];
 
+const reviewsTestData = [
+  {
+    text: 'sampleText1',
+    userId: 999999,
+    createdAt: '2002-01-23',
+    stars: 5,
+    credibility: 10,
+    isCustomer: 1,
+    productId: 'testProduct1',
+  },
+  {
+    text: 'sampleText2',
+    userId: 999999,
+    createdAt: '2010-01-23',
+    stars: 5,
+    credibility: 10,
+    isCustomer: 1,
+    productId: 'testProduct2',
+  },
+  {
+    text: 'sampleText3',
+    userId: 999999,
+    createdAt: '2003-01-23',
+    stars: 5,
+    credibility: 10,
+    isCustomer: 1,
+    productId: 'testProduct1',
+  },
+  {
+    text: 'sampleText4',
+    userId: 999999,
+    createdAt: '2012-01-23',
+    stars: 5,
+    credibility: 10,
+    isCustomer: 1,
+    productId: 'testProduct2',
+  },
+  {
+    text: 'sampleText5',
+    userId: 999999,
+    createdAt: '2010-01-23',
+    stars: 5,
+    credibility: 5,
+    isCustomer: 1,
+    productId: 'testProduct1',
+  },
+];
+
 const beforeSetUp = async () => {
   try {
     await client.indices.get({ index: 'nozama' });
@@ -262,7 +311,27 @@ const beforeSetUp = async () => {
 
 const afterSetDown = () => client.bulk({ body: remove });
 
+const beforeMySQL = () =>
+  Promise.all(reviewsTestData.map(review =>
+    mysql.queryAsync(
+      'INSERT INTO product_reviews (user_id, product_id, text, stars, credibility, created_at, is_customer, is_professional) VALUES (?, ?, ?, ?, ?, ?, ?, 0)',
+      [
+        review.userId,
+        review.productId,
+        review.text,
+        review.stars,
+        review.credibility,
+        review.createdAt,
+        review.isCustomer,
+      ],
+    )));
+
+const afterMySQL = () =>
+  mysql.queryAsync('DELETE FROM product_reviews WHERE product_id = "testProduct1" OR product_id = "testProduct2"');
+
 module.exports = {
   beforeSetUp,
   afterSetDown,
+  beforeMySQL,
+  afterMySQL,
 };
