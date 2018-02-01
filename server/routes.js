@@ -6,15 +6,13 @@ const RedisStore = require('connect-redis')(session);
 const passport = require('./passport');
 const products = require('../products');
 
-const redisClient = redis.createClient();
+const redisClient = redis.createClient(process.env.REDIS_URL || 'redis://127.0.0.1:6379');
 redisClient.on('error', console.error);
 
 const router = express.Router();
 
 router.use(session({
   store: new RedisStore({
-    host: process.env.REDIS_HOST || '127.0.0.1',
-    port: process.env.REDIS_PORT || 6379,
     client: redisClient,
     ttl: 260,
   }),
