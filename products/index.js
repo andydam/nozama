@@ -3,6 +3,7 @@ const express = require('express');
 const details = require('./details');
 const search = require('./search');
 const reviews = require('./reviews');
+const analytics = require('./analytics');
 
 const router = express.Router();
 
@@ -10,6 +11,12 @@ router.get('/products/details/:id', async (req, res) => {
   try {
     const product = await details.getById(req.params.id);
     res.status(200).json(product);
+
+    if (req.session.passport) {
+      analytics.details
+        .view(req.session.passport.user, req.params.id, new Date())
+        .then(null, err => console.log('error saving analytics, ', err));
+    }
   } catch (err) {
     res.status(500).json(err);
   }
