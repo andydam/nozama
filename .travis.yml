@@ -13,5 +13,6 @@ before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS nozama;'
   - mysql -u root --default-character-set=utf8 nozama < database/users.sql
   - mysql -u root --default-character-set=utf8 nozama < products/database/product_reviews.sql
+  - mysql -u root --default-character-set=utf8 nozama < products/database/product_analytics.sql
 before_script:
   - sleep 10
