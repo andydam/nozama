@@ -1,5 +1,5 @@
 const { client } = require('./elasticsearch');
 
-const getById = id => client.get({ index: 'nozama', type: 'products', id });
+const getById = id => client.get({ index: process.env.ELASTIC_INDEX, type: 'products', id });
 
 module.exports = { getById };
