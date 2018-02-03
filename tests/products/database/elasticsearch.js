@@ -15,10 +15,10 @@ describe('Products => Database => Elasticsearch', () => {
       expect(health.number_of_nodes).to.be.at.least(1);
       expect(health.number_of_data_nodes).to.be.at.least(1);
     }).timeout(1000);
-    it('should have access to the nozama index', async () => {
-      const resp = await client.indices.get({ index: 'nozama' });
+    it('should have access to the index', async () => {
+      const resp = await client.indices.get({ index: process.env.ELASTIC_INDEX });
       expect(resp).to.be.an('object');
-      expect(resp).to.have.property('nozama');
+      expect(resp).to.have.property(process.env.ELASTIC_INDEX);
     }).timeout(1000);
     it('should have access to the products type', async () => {
       const resp = await client.indices.existsType({
@@ -55,7 +55,7 @@ describe('Products => Database => Elasticsearch', () => {
       expect(results.hits.total).to.be.at.least(1);
       expect(results.hits.hits).to.be.an('array');
     }).timeout(1000);
-    it('should return a reasonable list of products given a matching query string', async () => {
+    xit('should return a reasonable list of products given a matching query string', async () => {
       const results = await search.byString('productName', 1);
       expect(results.hits.hits).to.have.lengthOf.at.least(1);
       expect(results.hits.hits[0]).to.be.an('object');

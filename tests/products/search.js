@@ -13,7 +13,7 @@ describe('Products => Search', () => {
       expect(results.totalItems).to.be.at.least(1);
       expect(results.results).to.be.an('array');
     }).timeout(1000);
-    it('should return a reasonable list of products given a matching query string', async () => {
+    xit('should return a reasonable list of products given a matching query string', async () => {
       const results = await search.byString('productName', 1);
       expect(results.results).to.have.lengthOf.at.least(1);
       expect(results.results[0]).to.be.an('object');

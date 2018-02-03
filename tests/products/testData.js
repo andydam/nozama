@@ -236,11 +236,6 @@ const remove = [
       _type: 'products',
     },
   },
-  {
-    delete: {
-      _index: process.env.ELASTIC_INDEX,
-    },
-  },
 ];
 
 const reviewsTestData = [
@@ -314,7 +309,7 @@ const beforeSetUp = async () => {
   }
 };
 
-const afterSetDown = () => client.indices.delete({ index: process.env.ELASTIC_INDEX });
+const afterSetDown = () => client.bulk({ body: remove });
 
 const beforeMySQL = () =>
   Promise.all(reviewsTestData.map(review =>

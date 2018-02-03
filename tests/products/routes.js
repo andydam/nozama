@@ -78,7 +78,7 @@ describe('Products => Routes', () => {
           done();
         });
     });
-    it('should respond with a reasonable list of products given a matching query string', (done) => {
+    xit('should respond with a reasonable list of products given a matching query string', (done) => {
       chai
         .request(server)
         .get('/products/search/productName')
