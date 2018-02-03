@@ -72,6 +72,10 @@ router.post('/products/reviews/:id', async (req, res) => {
       req.body.text,
       req.body.stars,
     );
+
+    analytics.reviews
+      .post(req.session.passport.user, req.params.id, new Date())
+      .then(null, err => console.log('error saving analytics, ', err));
     return res.status(200).json(reviewId);
   } catch (err) {
     return res.status(500).json(err);
