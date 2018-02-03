@@ -1,17 +1,28 @@
 language: node_js
 node_js:
   - "stable"
+dist: trusty
+sudo: required
 install:
   - npm install
 services:
   - redis-server
   - mysql
   - elasticsearch
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
 before_install:
   - export DATABASE_URL="mysql://root:@127.0.0.1/nozama"
+  - export ELASTIC_INDEX="test"
   - export NPM_CONFIG_PRODUCTION=false
   - mysql -e 'CREATE DATABASE IF NOT EXISTS nozama;'
   - mysql -u root --default-character-set=utf8 nozama < database/users.sql
   - mysql -u root --default-character-set=utf8 nozama < products/database/product_reviews.sql
+  - mysql -u root --default-character-set=utf8 nozama < products/database/product_analytics.sql
 before_script:
   - sleep 10

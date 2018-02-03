@@ -2,6 +2,7 @@ const { expect } = require('chai');
 
 const connection = require('../../../database');
 const reviews = require('../../../products/database/reviews');
+const analytics = require('../../../products/database/analytics');
 const testData = require('../testData');
 
 describe('Products => Database => MySQL', () => {
@@ -53,6 +54,20 @@ describe('Products => Database => MySQL', () => {
       expect(review.is_customer).to.equal(1);
       expect(review.is_professional).to.equal(0);
       await connection.queryAsync('DELETE FROM product_reviews WHERE id = ?', [reviewId]);
+    }).timeout(1500);
+  });
+  describe('analytics.insert', () => {
+    it('should insert analytics data into the database', async () => {
+      const analyticsId = await analytics.insert(999999, 'TEST', null, new Date(), 1);
+      const analytic = await connection
+        .queryAsync('SELECT * FROM product_analytics WHERE id = ?', [analyticsId])
+        .then(data => data[0]);
+      expect(analytic).to.be.an('object');
+      expect(analytic.user_id).to.equal(999999);
+      expect(analytic.activity).to.equal('TEST');
+      expect(analytic.time).to.be.a('date');
+      expect(analytic.duration).to.equal(1);
+      await connection.queryAsync('DELETE FROM product_analytics WHERE id = ?', [analyticsId]);
     }).timeout(1500);
   });
 });

@@ -4,7 +4,7 @@ const mysql = require('../../database');
 const index = [
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test',
       _type: 'products',
     },
@@ -18,7 +18,7 @@ const index = [
   },
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test1',
       _type: 'products',
     },
@@ -32,7 +32,7 @@ const index = [
   },
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test2',
       _type: 'products',
     },
@@ -46,7 +46,7 @@ const index = [
   },
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test3',
       _type: 'products',
     },
@@ -60,7 +60,7 @@ const index = [
   },
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test4',
       _type: 'products',
     },
@@ -74,7 +74,7 @@ const index = [
   },
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test5',
       _type: 'products',
     },
@@ -88,7 +88,7 @@ const index = [
   },
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test6',
       _type: 'products',
     },
@@ -102,7 +102,7 @@ const index = [
   },
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test7',
       _type: 'products',
     },
@@ -116,7 +116,7 @@ const index = [
   },
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test8',
       _type: 'products',
     },
@@ -130,7 +130,7 @@ const index = [
   },
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test9',
       _type: 'products',
     },
@@ -144,7 +144,7 @@ const index = [
   },
   {
     index: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test10',
       _type: 'products',
     },
@@ -161,77 +161,77 @@ const index = [
 const remove = [
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test',
       _type: 'products',
     },
   },
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test1',
       _type: 'products',
     },
   },
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test2',
       _type: 'products',
     },
   },
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test3',
       _type: 'products',
     },
   },
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test4',
       _type: 'products',
     },
   },
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test5',
       _type: 'products',
     },
   },
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test6',
       _type: 'products',
     },
   },
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test7',
       _type: 'products',
     },
   },
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test8',
       _type: 'products',
     },
   },
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test9',
       _type: 'products',
     },
   },
   {
     delete: {
-      _index: 'nozama',
+      _index: process.env.ELASTIC_INDEX,
       _id: 'test123Test10',
       _type: 'products',
     },
@@ -288,16 +288,16 @@ const reviewsTestData = [
 
 const beforeSetUp = async () => {
   try {
-    await client.indices.get({ index: 'nozama' });
+    await client.indices.get({ index: process.env.ELASTIC_INDEX });
   } catch (err) {
     if (err.status === 404) {
-      await client.indices.create({ index: 'nozama' });
+      await client.indices.create({ index: process.env.ELASTIC_INDEX });
       await client.indices.refresh();
     }
   }
   try {
     await client.get({
-      index: 'nozama',
+      index: process.env.ELASTIC_INDEX,
       type: 'products',
       id: 'test123Test',
     });
@@ -327,7 +327,9 @@ const beforeMySQL = () =>
     )));
 
 const afterMySQL = () =>
-  mysql.queryAsync('DELETE FROM product_reviews WHERE product_id = "testProduct1" OR product_id = "testProduct2"');
+  mysql
+    .queryAsync('DELETE FROM product_reviews WHERE product_id = "testProduct1" OR product_id = "testProduct2"')
+    .then(mysql.queryAsync('DELETE FROM product_analytics WHERE user_id = 999999'));
 
 const beforeLogin = () =>
   mysql.queryAsync('INSERT INTO users (id, name) VALUES (999999, "testUser123")');
