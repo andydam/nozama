@@ -15,7 +15,7 @@ router.get('/products/details/:id', async (req, res) => {
     if (req.session.passport) {
       analytics.details
         .view(req.session.passport.user, req.params.id, new Date())
-        .then(null, err => console.log('error saving analytics, ', err));
+        .catch(err => console.log('error saving analytics, ', err));
     }
   } catch (err) {
     res.status(500).json(err);
@@ -26,6 +26,12 @@ router.get('/products/search/:query', async (req, res) => {
   try {
     const results = await search.byString(req.params.query);
     res.status(200).json(results);
+
+    if (req.session.passport) {
+      analytics.search
+        .query(req.session.passport.user, req.params.query, new Date())
+        .catch(err => console.log('error saving analytics, ', err));
+    }
   } catch (err) {
     res.status(500).json(err);
   }
@@ -35,6 +41,12 @@ router.get('/products/search/:query/:page', async (req, res) => {
   try {
     const results = await search.byString(req.params.query, Number(req.params.page));
     res.status(200).json(results);
+
+    if (req.session.passport) {
+      analytics.search
+        .queryPage(req.session.passport.user, req.params.query, req.params.page, new Date())
+        .catch(err => console.log('error saving analytics, ', err));
+    }
   } catch (err) {
     res.status(500).json(err);
   }
