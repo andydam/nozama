@@ -17,9 +17,18 @@ See [CONTRIBUTING](CONTRIBUTING.md) for contribution guidelines.
 
 ## Usage
 
+### Using Docker
+
+```
+docker-compose build
+docker-compose up
+```
+
+### Without Docker
+
 ```
 npm install
-npm run
+npm start
 ```
 
 ## Requirements
