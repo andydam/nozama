@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  mysql:
+    build:
+      context: .
+      dockerfile: ./Dockerfiles/Dockerfile-mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=nozama
+      - MYSQL_USER=nozama
+      - MYSQL_PASSWORD=ayylmao
+    healthcheck:
+      test: "exit 0"
+
+  redis:
+    image: "redis:alpine"
+
+  nozama-products:
+    build:
+      context: .
+      dockerfile: ./Dockerfiles/Dockerfile-node
+    depends_on:
+      - redis
+      - mysql
+    environment:
+      - DATABASE_URL=mysql://nozama:ayylmao@mysql/nozama
+      - REDIS_URL=redis://redis:6379
+      - ELASTICSEARCH_DB=0.0.0.0:9200
+      - ELASTICINDEX=nozama
+    ports:
+      - "80:3000"
