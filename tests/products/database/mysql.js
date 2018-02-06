@@ -12,7 +12,7 @@ describe('Products => Database => MySQL', () => {
     it('should return reviews for a product given a valid product ID', () =>
       reviews.getByProductId('testProduct1').then((data) => {
         expect(data).to.have.lengthOf.at.least(3);
-        expect(data[0].text).to.equal('sampleText1');
+        expect(data[0].text).to.equal('sampleText3');
         expect(data[0].user_id).to.equal(999999);
       })).timeout(1000);
     it('should return nothing given a product ID without reviews', () =>
@@ -24,8 +24,8 @@ describe('Products => Database => MySQL', () => {
     it('should return reviews by a user given a valid user ID', () =>
       reviews.getByUserId(999999).then((data) => {
         expect(data).to.have.lengthOf.at.least(3);
-        expect(data[0].text).to.equal('sampleText1');
-        expect(data[0].product_id).to.equal('testProduct1');
+        expect(data[0].text).to.equal('sampleText4');
+        expect(data[0].product_id).to.equal('testProduct2');
       })).timeout(1000);
     it('should return nothing given an invalid user ID or user ID without reviews', () =>
       reviews

@@ -1,4 +1,5 @@
 const express = require('express');
+const jsonParser = require('body-parser').json();
 
 const details = require('./details');
 const search = require('./search');
@@ -73,7 +74,7 @@ router.get('/products/reviews', async (req, res) => {
   }
 });
 
-router.post('/products/reviews/:id', async (req, res) => {
+router.post('/products/reviews/:id', jsonParser, async (req, res) => {
   if (!req.session.passport) {
     return res.sendStatus(401);
   }

@@ -10,23 +10,6 @@ const getByProductId = async (productId) => {
         message: 'No reviews found',
       };
     }
-    reviews.sort((a, b) => {
-      if (a.credibility > b.credibility) {
-        return -1;
-      }
-      if (a.credibility < b.credibility) {
-        return 1;
-      }
-      const aDate = new Date(a.created_at);
-      const bDate = new Date(b.created_at);
-      if (aDate > bDate) {
-        return -1;
-      }
-      if (aDate < bDate) {
-        return 1;
-      }
-      return 0;
-    });
     return reviews;
   } catch (err) {
     return format.error(err);
