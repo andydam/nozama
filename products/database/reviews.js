@@ -2,7 +2,7 @@ const connection = require('../../database');
 
 const getByProductId = productId =>
   connection.queryAsync(
-    'SELECT text, user_id, created_at, stars, credibility, is_customer FROM product_reviews WHERE product_id = ? ORDER BY stars DESC, created_at DESC',
+    'SELECT text, user_id, created_at, stars, credibility, is_customer FROM product_reviews WHERE product_id = ? ORDER BY credibility DESC, created_at DESC',
     [productId],
   );
 
