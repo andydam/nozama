@@ -27,6 +27,6 @@ services:
       - DATABASE_URL=mysql://nozama:ayylmao@mysql/nozama
       - REDIS_URL=redis://redis:6379
       - ELASTICSEARCH_DB=0.0.0.0:9200
-      - ELASTICINDEX=nozama
+      - ELASTIC_INDEX=nozama
     ports:
       - "80:3000"

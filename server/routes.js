@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
+const jsonParser = require('body-parser').json();
 
 const passport = require('./passport');
 const products = require('../products');
@@ -28,7 +29,7 @@ router.get(
   (req, res) => (req.session.passport ? res.json(req.session.passport.user) : res.sendStatus(401)),
 );
 
-router.post('/auth', passport.authenticate('local'), (req, res) =>
+router.post('/auth', jsonParser, passport.authenticate('local'), (req, res) =>
   res.set('access-control-allow-credentials', 'true').sendStatus(200));
 
 router.get('/auth', (req, res) =>
