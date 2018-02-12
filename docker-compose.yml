@@ -10,6 +10,8 @@ services:
       - MYSQL_DATABASE=nozama
       - MYSQL_USER=nozama
       - MYSQL_PASSWORD=ayylmao
+    ports:
+      - "3306:3306"
     healthcheck:
       test: "exit 0"
 
