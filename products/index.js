@@ -1,5 +1,9 @@
 const express = require('express');
+const fetch = require('node-fetch');
 const jsonParser = require('body-parser').json();
+
+const collaborativePath = process.env.COLLAB_PATH;
+const contentPath = process.env.CONTENT_PATH;
 
 const details = require('./details');
 const search = require('./search');
@@ -91,6 +95,32 @@ router.post('/products/reviews/:id', jsonParser, async (req, res) => {
       .post(req.session.passport.user, req.params.id, new Date())
       .then(null, err => console.log('error saving analytics, ', err));
     return res.status(200).json(reviewId);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
+router.get('/products/related/:id', async (req, res) => {
+  if (!collaborativePath && !contentPath) {
+    return res.sendStatus(504);
+  }
+  try {
+    const urls = [`${contentPath}${req.params.id}`, `${contentPath}${req.params.id}`];
+    const data = await Promise.all(urls.map(url =>
+      fetch(url).then(resp =>
+        resp.text().then((text) => {
+          try {
+            const json = JSON.parse(text);
+            return json;
+          } catch (err) {
+            return [];
+          }
+        }))));
+
+    return res.status(200).json({
+      collaborative: data[0],
+      content: data[1].length ? data[1].related : data[1],
+    });
   } catch (err) {
     return res.status(500).json(err);
   }
