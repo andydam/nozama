@@ -10,6 +10,8 @@ services:
       - MYSQL_DATABASE=nozama
       - MYSQL_USER=nozama
       - MYSQL_PASSWORD=ayylmao
+    ports:
+      - "3306:3306"
     healthcheck:
       test: "exit 0"
 
@@ -28,5 +30,7 @@ services:
       - REDIS_URL=redis://redis:6379
       - ELASTICSEARCH_DB=0.0.0.0:9200
       - ELASTIC_INDEX=nozama
+      - COLLAB_PATH=http://1.1.1.1:3000/collaborative/product/
+      - CONTENT_PATH=http://2.2.2.2:3000/content/product/
     ports:
       - "80:3000"
